@@ -64,6 +64,7 @@ class SourceIpPersistence(BasePersistence):
     def get_params(self, name):
         return {
             "source-ip": {
-                "name": name
+                "name": name,
+                "timeout": 10
             }
         }

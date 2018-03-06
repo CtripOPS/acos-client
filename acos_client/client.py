@@ -43,7 +43,15 @@ from v30.sflow import SFlow as v30_SFlow
 from v30.slb import SLB as v30_SLB
 from v30.system import System as v30_System
 from v30.partition import Partition as v30_Partition
+from v30.admin import Admin as v30_Admin
+from v30.password import Password as v30_Password
 from v30.devicecontext import DeviceContext as v30_DeviceContext
+from v30.vrrp_a_vrid import Vrrpavrid as v30_Vrrpavrid
+from v30.ip_net_pool import IPnetpool as v30_IPnetpool
+from v30.router_bgp import Routerbgp as v30_Routerbgp
+from v30.router_bgp_redistribute import Routerbgpredistribute as v30_Routerbgpredistribute
+from v30.enable_management import Enablemanagement as v30_Enablemanagement
+from v30.healthcheck import Healthcheck as v30_Healthcheck
 
 VERSION_IMPORTS = {
     '21': {
@@ -72,10 +80,16 @@ VERSION_IMPORTS = {
         'SLB': v30_SLB,
         'System': v30_System,
         'File': v30_File,
+        'Admin': v30_Admin,
+        'Password': v30_Password,
         'Partition': v30_Partition,
-        'DeviceContext': v30_DeviceContext
-
-
+        'DeviceContext': v30_DeviceContext,
+        'VrrpA': v30_Vrrpavrid,
+        'IPnetpool': v30_IPnetpool,
+        'Routerbgp': v30_Routerbgp,
+        'Routerbgpredistribute': v30_Routerbgpredistribute,
+        'Enablemanagement': v30_Enablemanagement,
+        'Healthcheck': v30_Healthcheck,
     },
 }
 
@@ -141,8 +155,42 @@ class Client(object):
         return VERSION_IMPORTS[self._version]["Partition"](self)
 
     @property
+    def admin(self):
+        return VERSION_IMPORTS[self._version]["Admin"](self)
+
+    @property
+    def password(self):
+        return VERSION_IMPORTS[self._version]["Password"](self)
+
+    @property
     def devicecontext(self):
         return VERSION_IMPORTS[self._version]["DeviceContext"](self)
+
+    @property
+    def vrrpa(self):
+        return VERSION_IMPORTS[self._version]["VrrpA"](self)
+
+    @property
+    def routerbgp(self):
+        return VERSION_IMPORTS[self._version]["Routerbgp"](self)
+
+    @property
+    def routerbgpdistribute(self):
+        return VERSION_IMPORTS[self._version]["Routerbgpredistribute"](self)
+
+
+    @property
+    def ipnetpool(self):
+        return VERSION_IMPORTS[self._version]["IPnetpool"](self)
+
+
+    @property
+    def enablemanagement(self):
+        return VERSION_IMPORTS[self._version]["Enablemanagement"](self)
+
+    @property
+    def healthcheck(self):
+        return VERSION_IMPORTS[self._version]["Healthcheck"](self)
 
     @property
     def license_manager(self):
