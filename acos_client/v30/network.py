@@ -36,12 +36,17 @@ class NetworkVLAN(Network):
     def _build_payload(self, **kwargs):
         rv = {
             "vlan": {
-                "vlan-num": kwargs["vlannum"]
+                "vlan-num": kwargs["vlannum"],
+                "tagged-trunk-list": {
+                    "tagged-trunk-start": 1,
+                    "tagged-trunk-end": 1,
+                },
+                "ve": kwargs["vlannum"]
             }
         }
         return rv
 
-    def create(self, vlannum, sharedvlan):
+    def create(self, vlannum):
         payload = self._build_payload(vlannum=vlannum)
         return self._post(self.url_prefix, payload)
 

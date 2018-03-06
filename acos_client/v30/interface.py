@@ -84,6 +84,10 @@ class Interface(base.BaseV30):
     def management(self):
         return ManagementInterface(self.client)
 
+    @property
+    def ve(self):
+        return VE(self.client)
+
 
 class EthernetInterface(Interface):
     def __init__(self, client):
@@ -129,3 +133,26 @@ class ManagementInterface(Interface):
                                       default_gateway=default_gateway)
         return self._post(self.url_prefix + self._ifnum_to_str(ifnum),
                           payload)
+
+class VE(Interface):
+    def __init__(self, client):
+        super(VE, self).__init__(client)
+        self.iftype = "ve"
+        self.url_prefix = "{0}{1}/".format(self.url_prefix, self.iftype)
+
+    def _build_payload(self, **kwargs):
+        rv = {
+            self.iftype: {
+                "ifnum": kwargs.get("ifnum"),
+                "ip": {
+                    "address-list": [
+                        {
+                            "ipv4-address": kwargs.get("ip_address"),
+                            "ipv4-netmask": kwargs.get("ip_netmask")
+                        }
+                    ]
+                }
+
+            }
+        }
+        return rv

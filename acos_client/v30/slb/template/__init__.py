@@ -18,6 +18,7 @@ from persistence import CookiePersistence
 from persistence import SourceIpPersistence
 from ssl import ClientSSL
 from ssl import ServerSSL
+from httptemplate import Httptemplate, Httpurlhashtemplate, Tcptemplate
 
 
 class Template(base.BaseV30):
@@ -37,3 +38,16 @@ class Template(base.BaseV30):
     @property
     def server_ssl(self):
         return ServerSSL(self.client)
+
+    @property
+    def http_template(self):
+        return Httptemplate(self.client)
+
+    @property
+    def http_urlhash_template(self):
+        return Httpurlhashtemplate(self.client)
+
+    @property
+    def tcp_template(self):
+        return Tcptemplate(self.client)
+
