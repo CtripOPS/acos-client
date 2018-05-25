@@ -113,7 +113,7 @@ class HttpClient(object):
 
     headers = {}
 
-    def __init__(self, host, port=None, protocol="https", client=None, timeout=None,
+    def __init__(self, host, port=None, protocol="http", client=None, timeout=None,
                  retry_errno_list=None):
         self.host = host
         self.port = port
@@ -129,6 +129,8 @@ class HttpClient(object):
             self.retry_errnos += retry_errno_list
 
     def _http(self, method, api_url, payload):
+        self.protocol = 'http'
+        self.port = 80
         if self.protocol == 'https':
             http = httplib.HTTPSConnection(self.host, self.port, timeout=self.timeout)
             http.connect = lambda: force_tlsv1_connect(http)
@@ -178,7 +180,7 @@ class HttpClient(object):
 
         last_e = None
 
-        for i in xrange(0, 600):
+        for i in xrange(0, 10):
             try:
                 last_e = None
                 data = self._http(method, api_url, payload)
@@ -186,12 +188,12 @@ class HttpClient(object):
             except socket.error as e:
                 # Workaround some bogosity in the API
                 if e.errno in self.retry_errnos:
-                    time.sleep(0.1)
+                    time.sleep(0.01)
                     last_e = e
                     continue
                 raise e
             except httplib.BadStatusLine as e:
-                time.sleep(0.1)
+                time.sleep(0.01)
                 last_e = e
                 continue
             except EmptyHttpResponse as e:

@@ -66,3 +66,19 @@ class Tcptemplate(Basetemplate):
                 "reset-rev": 1
             }
         }
+
+
+class TcpProxyTemplate(Basetemplate):
+
+    def __init__(self, client):
+        self.pers_type = 'tcp-proxy'
+        super(TcpProxyTemplate, self).__init__(client)
+
+    def get_params(self, name):
+        return {
+            "tcp-proxy": {
+                "name": name,
+                "reset-fwd": 1,
+                "reset-rev": 1
+            }
+        }
