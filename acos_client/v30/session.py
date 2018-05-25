@@ -42,7 +42,7 @@ class Session(object):
             redis_server = redisobj.get_redis_servers(True)
             redis_conf_ls = [{"host": s["host"], "port": s["port"], "db": s["dbno"]} for s in redis_server]
             lock_mgmt = Redlock(redis_conf_ls)
-            device_lock = lock_mgmt.lock(local_ip+"_"+deviceIP+'_device_lock_calabash', 30*1000)
+            device_lock = lock_mgmt.lock(local_ip+"_"+deviceIP+'_'+self.username+'_device_lock_calabash', 30*1000)
             tmp_count = 0
             while isinstance(device_lock, bool) and not device_lock and tmp_count < 1000:
                 tmp_count += 1
@@ -51,7 +51,7 @@ class Session(object):
                 if self.check_session_invalid(self.session_id, deviceIP):
                     return self.session_id
 
-                device_lock = lock_mgmt.lock(local_ip+"_"+deviceIP+'_device_lock_calabash', 30*1000)
+                device_lock = lock_mgmt.lock(local_ip+"_"+deviceIP+'_'+self.username+'_device_lock_calabash', 30*1000)
 
             self.session_id = self.get_redis_session(deviceIP)
             if self.check_session_invalid(self.session_id, deviceIP):
@@ -121,7 +121,7 @@ class Session(object):
         local_ip = self.get_local_ip()
         redis_conn_ls = redisobj.get_redis_connection(isMaster=False)
         redis_conn_ls = redis_conn_ls["message"]
-        deviceIP_sessions = redis_conn_ls[0]["redis_conn"].hget('acos_sessions', deviceIP)
+        deviceIP_sessions = redis_conn_ls[0]["redis_conn"].hget('acos_sessions', deviceIP+'_'+self.username)
         if not deviceIP_sessions:#外层key不存在的情况
             return "123"
         all_serverip_session_dict = json.loads(deviceIP_sessions)
@@ -145,7 +145,7 @@ class Session(object):
             else:
                 r_redis_conn_ls.append(redis_conn)
 
-        all_deviceIP_sessions = r_redis_conn_ls[0]['redis_conn'].hget('acos_sessions', deviceIP)
+        all_deviceIP_sessions = r_redis_conn_ls[0]['redis_conn'].hget('acos_sessions', deviceIP+'_'+self.username)
         all_deviceIP_sessions_dict = {}
         if all_deviceIP_sessions is None:
             all_deviceIP_sessions_dict.setdefault(local_ip, {'session_id': sessionid})
@@ -156,7 +156,7 @@ class Session(object):
             else:
                 all_deviceIP_sessions_dict[local_ip] = {'session_id': sessionid}
         for w_redis_conn in w_redis_conn_ls:
-                w_redis_conn["redis_conn"].hset('acos_sessions', deviceIP, json.dumps(all_deviceIP_sessions_dict))
+                w_redis_conn["redis_conn"].hset('acos_sessions', deviceIP+'_'+self.username, json.dumps(all_deviceIP_sessions_dict))
 
     def check_session_invalid(self, sessionID, deviceIP):
         if sessionID is None:

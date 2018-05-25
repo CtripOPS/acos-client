@@ -82,10 +82,13 @@ class Partition(base.BaseV30):
         # set it, loop if we get an exists error.
         for i in xrange(1, 1000):
             try:
-                self._create(name, self._next_available_id())
+                p_id = self._next_available_id()
+                self._create(name+str(p_id), p_id)
                 break
             except acos_errors.PartitionIdExists:
                 time.sleep(0.05 + random.random()/100)
+        if isinstance(p_id, int):
+            return p_id
 
     def delete(self, name):
         if name == 'shared':
