@@ -1,7 +1,7 @@
-import base
+import acos_client.v30.base
 
 
-class IPnetpool(base.BaseV30):
+class IPnetpool(acos_client.v30.base.BaseV30):
 
     def create(self, pool_name, start_address, end_address, netmask):
         params = {

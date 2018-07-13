@@ -39,3 +39,29 @@ class Routerbgp(base.BaseV30):
             }
         }
         self._post("/router/bgp/{0}/".format(as_number), params)
+
+    def add_route_map(self, as_number, remote_address, remote_as, nbr_route_map, nbr_rmap_direction='in'):
+        params = {
+            "bgp": {
+                "as-number": as_number,
+                "neighbor": {
+                    "ipv4-neighbor-list": [
+                        {
+                            "nbr-remote-as": remote_as,
+                            "neighbor-ipv4": remote_address,
+                            "neighbor-route-map-lists": [
+                                {
+                                    "nbr-rmap-direction": nbr_rmap_direction,
+                                    "nbr-route-map": nbr_route_map
+                                }
+                            ],
+                        }
+                    ]
+                }
+            }
+        }
+        self._post("/router/bgp/{0}/".format(as_number), params)
+
+
+    def get(self, as_number):
+        return self._get("/router/bgp/{0}/".format(as_number))

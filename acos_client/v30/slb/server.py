@@ -63,6 +63,17 @@ class Server(base.BaseV30):
 
         return self._post(self.url_prefix + name, params, **kwargs)
 
+    def update_weight(self, name, ip_address, **kwargs):
+        params = {
+            "server": {
+                "name": name,
+                "host": ip_address,
+            }
+        }
+        self.get(name, **kwargs)
+
+        return self._post(self.url_prefix + name, params, **kwargs)
+
     def delete(self, name):
         return self._delete(self.url_prefix + name)
 

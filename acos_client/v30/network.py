@@ -38,16 +38,16 @@ class NetworkVLAN(Network):
             "vlan": {
                 "vlan-num": kwargs["vlannum"],
                 "tagged-trunk-list": {
-                    "tagged-trunk-start": 1,
-                    "tagged-trunk-end": 1,
+                    "tagged-trunk-start": kwargs["trunkid"],
+                    "tagged-trunk-end": kwargs["trunkid"],
                 },
                 "ve": kwargs["vlannum"]
             }
         }
         return rv
 
-    def create(self, vlannum):
-        payload = self._build_payload(vlannum=vlannum)
+    def create(self, vlannum, trunkid=1):
+        payload = self._build_payload(vlannum=vlannum, trunkid=trunkid)
         return self._post(self.url_prefix, payload)
 
     def get_all(self):

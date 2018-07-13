@@ -47,8 +47,9 @@ from v30.admin import Admin as v30_Admin
 from v30.password import Password as v30_Password
 from v30.devicecontext import DeviceContext as v30_DeviceContext
 from v30.vrrp_a_vrid import Vrrpavrid as v30_Vrrpavrid
-from v30.ip_net_pool import IPnetpool as v30_IPnetpool
+from acos_client.v30.ip import IP as v30_IP
 from v30.router_bgp import Routerbgp as v30_Routerbgp
+from v30.route_map import RouteMap as v30_Routemap
 from v30.router_bgp_redistribute import Routerbgpredistribute as v30_Routerbgpredistribute
 from v30.enable_management import Enablemanagement as v30_Enablemanagement
 from v30.healthcheck import Healthcheck as v30_Healthcheck
@@ -85,8 +86,9 @@ VERSION_IMPORTS = {
         'Partition': v30_Partition,
         'DeviceContext': v30_DeviceContext,
         'VrrpA': v30_Vrrpavrid,
-        'IPnetpool': v30_IPnetpool,
+        'IP': v30_IP,
         'Routerbgp': v30_Routerbgp,
+        'RouteMap': v30_Routemap,
         'Routerbgpredistribute': v30_Routerbgpredistribute,
         'Enablemanagement': v30_Enablemanagement,
         'Healthcheck': v30_Healthcheck,
@@ -180,9 +182,8 @@ class Client(object):
 
 
     @property
-    def ipnetpool(self):
-        return VERSION_IMPORTS[self._version]["IPnetpool"](self)
-
+    def ip(self):
+        return VERSION_IMPORTS[self._version]["IP"](self)
 
     @property
     def enablemanagement(self):
@@ -191,6 +192,10 @@ class Client(object):
     @property
     def healthcheck(self):
         return VERSION_IMPORTS[self._version]["Healthcheck"](self)
+
+    @property
+    def route_map(self):
+        return VERSION_IMPORTS[self._version]["RouteMap"](self)
 
     @property
     def license_manager(self):

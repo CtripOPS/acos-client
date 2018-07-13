@@ -52,6 +52,6 @@ class Template(base.BaseV30):
         return Tcptemplate(self.client)
 
     @property
-    def tcp_porxy_template(self):
+    def tcp_proxy_template(self):
         return TcpProxyTemplate(self.client)
 
