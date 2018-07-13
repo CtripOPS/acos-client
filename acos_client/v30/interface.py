@@ -88,6 +88,10 @@ class Interface(base.BaseV30):
     def ve(self):
         return VE(self.client)
 
+    @property
+    def loopback(self):
+        return Loopback(self.client)
+
 
 class EthernetInterface(Interface):
     def __init__(self, client):
@@ -156,3 +160,31 @@ class VE(Interface):
             }
         }
         return rv
+
+class Loopback(Interface):
+    def __init__(self, client):
+        super(Loopback, self).__init__(client)
+        self.iftype = "loopback"
+        self.url_prefix = "{0}{1}/".format(self.url_prefix, self.iftype)
+
+    def _build_payload(self, **kwargs):
+        rv = {
+            self.iftype: {
+                "ifnum": kwargs.get("ifnum"),
+                "ip": {
+                    "address-list": [
+                        {
+                            "ipv4-address": kwargs.get('ip_address'),
+                            "ipv4-netmask": "255.255.255.255"
+                        }
+                    ]
+                }
+            }
+        }
+        return rv
+
+    def create(self, ifnum=None, ip_address=None):
+        payload = self._build_payload(ifnum=ifnum, ip_address=ip_address)
+        import pdb
+        pdb.set_trace()
+        return self._post(self.url_prefix, payload)

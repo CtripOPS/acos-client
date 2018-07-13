@@ -114,6 +114,7 @@ class HttpClient(object):
                     z = requests.request(method, self.url_base + api_url, verify=False,
                                          files=files, headers=hdrs)
                 else:
+                    requests.packages.urllib3.disable_warnings()
                     z = requests.request(method, self.url_base + api_url, verify=False,
                                          data=payload, headers=hdrs)
 
