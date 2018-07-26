@@ -68,11 +68,13 @@ class Server(base.BaseV30):
             "server": {
                 "name": name,
                 "host": ip_address,
+                "weight": kwargs['axapi_args']['weight'],
             }
         }
         self.get(name, **kwargs)
 
-        return self._post(self.url_prefix + name, params, **kwargs)
+
+        return self._post(self.url_prefix + name, params, **{})
 
     def delete(self, name):
         return self._delete(self.url_prefix + name)
@@ -80,3 +82,6 @@ class Server(base.BaseV30):
     @property
     def port(self):
         return Port(self.client)
+
+    def all(self,):
+        return self._get(self.url_prefix)

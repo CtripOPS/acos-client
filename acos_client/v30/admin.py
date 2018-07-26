@@ -16,3 +16,10 @@ class Admin(base.BaseV30):
             }
         }
         self._post("/admin", params)
+
+    def delete(self, user_name):
+        self._delete("/admin/{0}".format(user_name))
+
+    def all(self, ):
+        return self._get('/admin')
+

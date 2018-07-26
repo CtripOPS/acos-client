@@ -92,13 +92,13 @@ class Partition(base.BaseV30):
 
     def delete(self, name):
         if name == 'shared':
-            return
+            return {'status': False, 'message': 'shared partition forbid delete!'}
 
         self.client.session.close()
         try:
             self._delete("/partition/" + name)
         except acos_errors.NotFound:
-            pass
+            return {'status': False, 'message': 'delete partition {0} ERR. not found!'.format(name)}
 
         self.client.session.close()
         x = self.get(name)
@@ -108,6 +108,10 @@ class Partition(base.BaseV30):
                 'id': x['partition-id']
             }
         }
-        self._post("/delete/partition", p)
+        try:
+            self._post("/delete/partition", p)
+        except Exception as e:
+            return {'status': False, 'message': 'delete partition {0} ERR. message: {1}'.format(name, str(e))}
 
         self.client.session.close()
+        return {'status': True, 'message': 'ok'}

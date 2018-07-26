@@ -127,3 +127,6 @@ class ServiceGroup(base.BaseV30):
 
     def oper(self, name, *args, **kwargs):
         return self._get(self.url_prefix + name + "/oper", **kwargs)
+
+    def all(self, **kwargs):
+        return self._get(self.url_prefix, **kwargs)

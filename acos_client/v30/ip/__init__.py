@@ -14,16 +14,11 @@
 
 import acos_client.v30.base as base
 
-from ip_net_pool import IPnetpool
 from ip_prefix_list import IPPrefixList
 
 
 class IP(base.BaseV30):
     # For status args
-
-    @property
-    def net_pool(self):
-        return IPnetpool(self.client)
 
     @property
     def prefix_list(self):

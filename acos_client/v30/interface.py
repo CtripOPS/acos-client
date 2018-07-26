@@ -185,6 +185,4 @@ class Loopback(Interface):
 
     def create(self, ifnum=None, ip_address=None):
         payload = self._build_payload(ifnum=ifnum, ip_address=ip_address)
-        import pdb
-        pdb.set_trace()
         return self._post(self.url_prefix, payload)
