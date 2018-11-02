@@ -20,15 +20,23 @@ import base
 class Action(base.BaseV30):
 
     def write_memory(self, **kwargs):
+        '''
+        AX 默认有两个bootimage  primary和secondary都需要保存
+        :param kwargs:
+        :return:
+        '''
+        destinations = ['primary', 'secondary']
         payload = {
             "memory": {
-                "destination": "primary",
+                "destination": "",
                 "partition": "all"
             }
         }
         try:
             try:
-                self._post("/write/memory/", payload, **kwargs)
+                for s in destinations:
+                    payload['memory']['destination'] = s
+                    self._post("/write/memory/", payload, **kwargs)
             except ae.AxapiJsonFormatError:
                 # Workaround regression in 4.1.0 backwards compat
                 self._post("/write/memory/", "", **kwargs)

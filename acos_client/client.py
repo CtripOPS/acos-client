@@ -28,6 +28,7 @@ from v21.network import Network as v21_Network
 from v21.session import Session as v21_Session
 from v21.sflow import SFlow as v21_SFlow
 from v21.slb import SLB as v21_SLB
+from acos_client.v21.slb import File as v21_File
 from v21.system import System as v21_System
 
 import v30.axapi_http
@@ -57,6 +58,7 @@ from v30.healthcheck import Healthcheck as v30_Healthcheck
 VERSION_IMPORTS = {
     '21': {
         'DNS': v21_DNS,
+	'File': v21_File,
         'http': v21.axapi_http,
         'HA': v21_HA,
         'Interface': v21_Interface,
