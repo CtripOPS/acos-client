@@ -33,13 +33,15 @@ class VirtualServer(base.BaseV30):
 
     def _set(self, name, ip_address=None, status='stats-data-enable',
              update=False, arp_disable=None, vrid=None, **kwargs):
+
         params = {
             "virtual-server": self.minimal_dict({
                 "name": name,
-                "ip-address": ip_address,
+                #"ip-address": ip_address,
                 "arp-disable": None if arp_disable is None else int(arp_disable)
             }),
         }
+
         if vrid:
             params['virtual-server']['vrid'] = vrid
 
@@ -48,8 +50,8 @@ class VirtualServer(base.BaseV30):
         if config_defaults:
             for k, v in config_defaults.iteritems():
                 params['virtual-server'][k] = v
-
-
+        if 'ip-address' not in params['virtual-server'].keys() and 'ipv6-address' not in params['virtual-server'].keys():
+            raise acos_errors.InvalidParameter(110, 'ip-address or ipv6-address is missing.')
         if not update:
             name = ''
 
