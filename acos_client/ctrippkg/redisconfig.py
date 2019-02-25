@@ -7,7 +7,7 @@ from result import Result
 
 #设置运行环境和redis 配置url
 SYSTEMCONFIG = {
-    "host": "http://ws.fx.uat.qa.nt.ctripcorp.com/credis/configapi/getcluster/OPS_VS_LB",
+    "host": "http://api.credis.arch.uat.qa.nt.ctripcorp.com/configapi/getcluster/OPS_VS_LB",
     "dbno": 0
 }
 
