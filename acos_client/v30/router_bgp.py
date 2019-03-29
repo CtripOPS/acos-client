@@ -8,7 +8,9 @@ class Routerbgp(base.BaseV30):
         group_neighbor_ls = [
             {
                 "peer-group": t["remote_address"],
-                "peer-group-remote-as": t["remote_as_number"]} for t in remote_as_address_ls]
+                "peer-group-remote-as": t["remote_as_number"],
+                "advertisement-interval": 1
+            } for t in remote_as_address_ls]
 
         params = {
             "bgp": {
@@ -19,6 +21,10 @@ class Routerbgp(base.BaseV30):
                 },
                 "neighbor": {
                     "peer-group-neighbor-list": group_neighbor_ls
+                },
+                "timers": {
+                    "bgp-holdtime": 3,
+                    "bgp-keepalive": 1
                 }
             }
         }
@@ -32,9 +38,11 @@ class Routerbgp(base.BaseV30):
                     "peer-group-neighbor-list": [
                         {
                             "peer-group": remote_address,
-                            "peer-group-remote-as": remote_as
+                            "peer-group-remote-as": remote_as,
+                            "advertisement-interval": 1
                         }
-                    ]
+                    ],
+
                 }
             }
         }

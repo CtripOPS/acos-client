@@ -82,3 +82,17 @@ class TcpProxyTemplate(Basetemplate):
                 "reset-rev": 1
             }
         }
+
+class ServerHealthcheckTemplate(Basetemplate):
+
+    def __init__(self, client):
+        self.pers_type = 'server'
+        super(ServerHealthcheckTemplate, self).__init__(client)
+
+    def get_params(self, name='default'):
+        return {
+            "server": {
+                "name": name,
+                "health-check-disable": 1
+            }
+        }

@@ -18,7 +18,7 @@ from persistence import CookiePersistence
 from persistence import SourceIpPersistence
 from ssl import ClientSSL
 from ssl import ServerSSL
-from httptemplate import Httptemplate, Httpurlhashtemplate, Tcptemplate, TcpProxyTemplate
+from httptemplate import Httptemplate, Httpurlhashtemplate, Tcptemplate, TcpProxyTemplate, ServerHealthcheckTemplate
 
 
 class Template(base.BaseV30):
@@ -54,4 +54,8 @@ class Template(base.BaseV30):
     @property
     def tcp_proxy_template(self):
         return TcpProxyTemplate(self.client)
+
+    @property
+    def server_healthcheck_template(self):
+        return ServerHealthcheckTemplate(self.client)
 

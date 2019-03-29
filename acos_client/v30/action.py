@@ -1,3 +1,4 @@
+#coding: utf-8
 # Copyright 2014,  Jeff Buttars,  A10 Networks.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -21,7 +22,7 @@ class Action(base.BaseV30):
 
     def write_memory(self, **kwargs):
         '''
-        AX Ä¬ÈÏÓĞÁ½¸öbootimage  primaryºÍsecondary¶¼ĞèÒª±£´æ
+        AX é»˜è®¤æœ‰ä¸¤ä¸ªbootimage  primaryå’Œsecondaryéƒ½éœ€è¦ä¿å­˜
         :param kwargs:
         :return:
         '''
