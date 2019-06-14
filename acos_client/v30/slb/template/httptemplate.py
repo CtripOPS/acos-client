@@ -33,6 +33,21 @@ class Httptemplate(Basetemplate):
             }
         }
 
+class ConnectionReusetemplate(Basetemplate):
+
+    def __init__(self, client):
+        self.pers_type = 'connection-reuse'
+        super(ConnectionReusetemplate, self).__init__(client)
+
+    def get_params(self, name):
+        return {
+            "connection-reuse": {
+                "name": name,
+                "limit-per-server": 0
+            }
+        }
+
+
 
 class Httpurlhashtemplate(Basetemplate):
 

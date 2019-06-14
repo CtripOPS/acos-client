@@ -19,6 +19,7 @@ from persistence import SourceIpPersistence
 from ssl import ClientSSL
 from ssl import ServerSSL
 from httptemplate import Httptemplate, Httpurlhashtemplate, Tcptemplate, TcpProxyTemplate, ServerHealthcheckTemplate
+from httptemplate import ConnectionReusetemplate
 
 
 class Template(base.BaseV30):
@@ -42,6 +43,10 @@ class Template(base.BaseV30):
     @property
     def http_template(self):
         return Httptemplate(self.client)
+
+    @property
+    def http_connection_reuse_template(self):
+        return ConnectionReusetemplate(self.client)
 
     @property
     def http_urlhash_template(self):
