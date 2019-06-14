@@ -33,6 +33,21 @@ class Httptemplate(Basetemplate):
             }
         }
 
+class ConnectionReusetemplate(Basetemplate):
+
+    def __init__(self, client):
+        self.pers_type = 'connection-reuse'
+        super(ConnectionReusetemplate, self).__init__(client)
+
+    def get_params(self, name):
+        return {
+            "connection-reuse": {
+                "name": name,
+                "limit-per-server": 0
+            }
+        }
+
+
 
 class Httpurlhashtemplate(Basetemplate):
 
@@ -80,5 +95,19 @@ class TcpProxyTemplate(Basetemplate):
                 "name": name,
                 "reset-fwd": 1,
                 "reset-rev": 1
+            }
+        }
+
+class ServerHealthcheckTemplate(Basetemplate):
+
+    def __init__(self, client):
+        self.pers_type = 'server'
+        super(ServerHealthcheckTemplate, self).__init__(client)
+
+    def get_params(self, name='default'):
+        return {
+            "server": {
+                "name": name,
+                "health-check-disable": 1
             }
         }

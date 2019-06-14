@@ -42,6 +42,7 @@ from v30.network import Network as v30_Network
 from v30.session import Session as v30_Session
 from v30.sflow import SFlow as v30_SFlow
 from v30.slb import SLB as v30_SLB
+from v30.ip import IP as v30_IP
 from v30.system import System as v30_System
 from v30.partition import Partition as v30_Partition
 from v30.admin import Admin as v30_Admin
@@ -81,6 +82,7 @@ VERSION_IMPORTS = {
         'Session': v30_Session,
         'SFlow': v30_SFlow,
         'SLB': v30_SLB,
+        'IP': v30_IP,
         'System': v30_System,
         'File': v30_File,
         'Admin': v30_Admin,
@@ -137,6 +139,10 @@ class Client(object):
     @property
     def slb(self):
         return VERSION_IMPORTS[self._version]['SLB'](self)
+
+    @property
+    def ip(self):
+        return VERSION_IMPORTS[self._version]['IP'](self)
 
     @property
     def network(self):
