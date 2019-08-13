@@ -94,7 +94,10 @@ class ServiceGroup(base.BaseV30):
 
         if config_defaults:
             for k, v in config_defaults.iteritems():
-                params['service-group'][k] = v
+                if 'lc-method' in params['service-group'].keys() and k == 'lb-method':
+                    pass
+                else:
+                    params['service-group'][k] = v
 
         if not update:
             name = ''
